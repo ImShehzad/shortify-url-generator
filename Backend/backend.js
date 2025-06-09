@@ -73,7 +73,6 @@ app.get('/:shortId', async (req, res) => {
     if (result.rows.length === 0) {
       return res.status(404).send('URL not found');
     }
-
     const longUrl = result.rows[0].long_url;
     return res.redirect(longUrl); // <-- Redirect to the original long URL
   } catch (err) {
