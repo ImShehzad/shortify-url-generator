@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Shortify URL Generator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Bootstrap 5 CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+  <div class="container d-flex flex-column justify-content-center align-items-center vh-100">
+    <div class="card p-4 shadow w-100" style="max-width: 600px;">
+      <h3 class="mb-4 text-center">Shortify URL Generator</h3>
+      
+      <div class=" input-group mb-3">
+        <input type="url" id="longUrl" class="form-control" placeholder="Enter long URL..." required>
+        <button id="generateBtn" class="btn btn-primary w-30" onclick="generateShortUrl()">Generate Short URL</button>
+      </div>
+
+      <div class="mt-1" id="result" style="display: none;">
+        <div class="input-group">
+            <input type="text" id="shortUrl" class="form-control" readonly>
+            <button id="copyBtn" class="btn btn-outline-secondary w-30" onclick="copyToClipboard()" disabled>Copy Short URL</button>
+        </div> 
+      </div>  
+    </div>
+  </div>
+
+  <!-- Bootstrap 5 JS (for modal/tooltips if needed) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- JavaScript -->
+  <script src="../Frontend/index.js"></script>
+</body>
+</html>
