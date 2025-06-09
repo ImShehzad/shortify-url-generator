@@ -39,7 +39,6 @@ app.post('/shorten', async (req, res) => {
 
   try {
     const existing = await pool.query('SELECT short_id FROM urls WHERE long_url = $1', [longUrl]);
-    console.log(existing);
     if (existing.rows.length > 0) {
       const shortUrl = `${BASE_URL}/${existing.rows[0].short_id}`;
       return res.json({ shortUrl });
