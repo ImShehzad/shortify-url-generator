@@ -8,7 +8,7 @@ const generateBtn = document.getElementById('generateBtn');
       const longUrl = longUrlInput.value.trim();
       if (!longUrl) return alert("Please enter a URL.");
 
-      const res = await fetch('https://tinyport.netlify.app/shorten', {
+      const res = await fetch('https://shortify-url-generator-2.onrender.com/shorten', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ longUrl})
