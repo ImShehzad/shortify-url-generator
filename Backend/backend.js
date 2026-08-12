@@ -11,7 +11,7 @@ const PORT = process.env.PORT || 3000;
 
 app.use(
   cors({
-    origin: "https://tinyport.netlify.app",
+    origin: "https://shortify-url-generator-3.onrender.com"
   })
 );
 app.use(express.json());
