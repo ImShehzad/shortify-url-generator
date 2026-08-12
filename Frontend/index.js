@@ -1,32 +1,47 @@
+const API_URL = 'https://tinyport.onrender.com';
+
 const generateBtn = document.getElementById('generateBtn');
-    const copyBtn = document.getElementById('copyBtn');
-    const longUrlInput = document.getElementById('longUrl');
-    const shortUrlInput = document.getElementById('shortUrl');
-    const resultDiv = document.getElementById('result');
+const copyBtn = document.getElementById('copyBtn');
+const longUrlInput = document.getElementById('longUrl');
+const shortUrlInput = document.getElementById('shortUrl');
+const resultDiv = document.getElementById('result');
 
-    generateBtn.addEventListener('click', async () => {
-      const longUrl = longUrlInput.value.trim();
-      if (!longUrl) return alert("Please enter a URL.");
+async function generateShortUrl() {
+  const longUrl = longUrlInput.value.trim();
+  if (!longUrl) return alert("Please enter a URL.");
 
-      const res = await fetch('https://tinyport.onrender.com/shorten', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ longUrl})
-      });
-
-      const data = await res.json();
-      if (data.shortUrl) {
-        shortUrlInput.value = data.shortUrl;
-        resultDiv.style.display = 'block';
-        copyBtn.disabled = false;
-      } else {
-        alert("Error generating short URL.");
-      }
+  try {
+    const res = await fetch(`${API_URL}/shorten`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ longUrl })
     });
 
-    copyBtn.addEventListener('click', () => {
-      shortUrlInput.select();
-      document.execCommand('copy');
-      copyBtn.textContent = "Copied!";
-      setTimeout(() => (copyBtn.textContent = "Copy URL"), 2000);
-    });
+    const data = await res.json();
+    if (!res.ok) {
+      throw new Error(data.error || 'Error generating short URL.');
+    }
+
+    if (data.shortUrl) {
+      shortUrlInput.value = data.shortUrl;
+      resultDiv.style.display = 'block';
+      copyBtn.disabled = false;
+      copyBtn.textContent = 'Copy Short URL';
+      return;
+    }
+
+    throw new Error('Error generating short URL.');
+  } catch (error) {
+    alert(error.message || 'Error generating short URL.');
+  }
+}
+
+function copyToClipboard() {
+  shortUrlInput.select();
+  document.execCommand('copy');
+  copyBtn.textContent = 'Copied!';
+  setTimeout(() => (copyBtn.textContent = 'Copy Short URL'), 2000);
+}
+
+generateBtn.addEventListener('click', generateShortUrl);
+copyBtn.addEventListener('click', copyToClipboard);

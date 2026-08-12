@@ -1,17 +1,29 @@
-require('dotenv').config(); 
+require('dotenv').config();
 
 const express = require("express");
 const { nanoid } = require('nanoid');
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const pool = require("./db");
-const BASE_URL = process.env.BASE_URL;
+
+const BASE_URL = process.env.BASE_URL || "https://tinyport.onrender.com";
 const app = express();
 const PORT = process.env.PORT || 3000;
+const allowedOrigins = [
+  "https://shortify-url-generator-3.onrender.com",
+  "http://localhost:3000",
+  "http://127.0.0.1:3000"
+];
 
 app.use(
   cors({
-    origin: "https://shortify-url-generator-3.onrender.com"
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+        return;
+      }
+      callback(new Error("Not allowed by CORS"));
+    }
   })
 );
 app.use(express.json());
